@@ -14,6 +14,7 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.ActivityRecognitionClient;
 import com.google.android.gms.location.LocationServices;
+import com.lubyte.rememberthekeys.service.ActivityService;
 
 
 import android.app.Activity;
@@ -35,7 +36,7 @@ public class ActivityManager implements ConnectionCallbacks,OnConnectionFailedLi
 	private ConnectionResult mConnResult;
 	private static final int PAM_RESOLVE_ERROR = 1;
 	
-	private boolean mResolvingError=false;
+
 	private GoogleApiClient mGClient;
 	private static final String DIALOG_ERROR = "dialog_error";
 	private static final String STATE_RESOLVING_ERROR = "ResolveErrorState";
@@ -46,8 +47,10 @@ public class ActivityManager implements ConnectionCallbacks,OnConnectionFailedLi
 	private static final int REQUEST_SERVICES_SUSPENDED=-3;
 	private ActivityRecognitionClient mActivityRecognitionClient;
 	private boolean mActivityUpdatesActive=false;
+	private boolean mResolvingError = false;
 	private AtomicInteger mRequestType;
 	private Context mContext;
+	private PendingIntent mActivityIntent;
 	
 	public ActivityManager(Context context) {
 		mContext = context;
@@ -65,7 +68,8 @@ public class ActivityManager implements ConnectionCallbacks,OnConnectionFailedLi
 			//handle in onConnectionFailed
 		}
 		mActivityRecognitionClient = new ActivityRecognitionClient(mContext,(com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks) this,this);
-		
+		Intent intent = new Intent(mContext, ActivityService.class);
+		mActivityIntent = PendingIntent.getService(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 	}
 	/*@Override
 	public void onCreate(Bundle bundle){
