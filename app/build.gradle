@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.lubyte.rememberthekeys"
         minSdkVersion 17
-        targetSdkVersion 21
+        targetSdkVersion 19
     }
 
     buildTypes {
@@ -22,4 +22,6 @@ dependencies {
     compile 'com.android.support:support-v4:19.1.0'
     compile 'com.google.android.gms:play-services:5.0.89'
     compile 'com.android.support:appcompat-v7:19.1.0'
+    //compile 'com.android.support:support-v4:18.0.0'
+    //compile 'com.google.android.gms:play-services:5.0.89'
 }
